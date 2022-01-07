@@ -10,9 +10,7 @@
         }
       ],
       "UpstreamPathTemplate": "/pr",
-      "UpstreamHttpMethod": [
-        "Get"
-      ]
+      "UpstreamHttpMethod": [ "Get" ]
     }
   ],
   "GlobalConfiguration": {

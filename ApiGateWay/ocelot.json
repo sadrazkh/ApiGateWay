@@ -1,0 +1,50 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/User",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7048
+        }
+      ],
+      "UpstreamPathTemplate": "/pr",
+      "UpstreamHttpMethod": [ "Get" ],
+      "SwaggerKey": "contacts"
+    },
+    {
+      "DownstreamPathTemplate": "/api/values",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 9001
+        },
+        {
+          "Host": "localhost",
+          "Port": 9002
+        }
+      ],
+      "UpstreamPathTemplate": "/",
+      "LoadBalancer": "RoundRobin",
+      //"LoadBalancer": "LeastConnection",  
+      "UpstreamHttpMethod": [ "Get" ]
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "https://localhost:7096"
+  },
+  "SwaggerEndPoints": [
+    {
+      "Key": "contacts",
+      "Config": [
+        {
+          "Name": "Contacts API",
+          "Version": "v1",
+          "Url": "http://localhost:7096/swagger/v1/swagger.json"
+        }
+      ]
+    }
+  ]
+}
