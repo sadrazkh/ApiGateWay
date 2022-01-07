@@ -20,6 +20,9 @@ namespace ProfileService.Controllers
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<User> Get()
         {
+
+            var res  = Request.Headers.ToList();
+
             return Enumerable.Range(1, 5).Select(index => new User
             {
                 Date = DateTime.Now.AddDays(index),

@@ -14,6 +14,8 @@ namespace Web.Controllers.V1
         [HttpGet]
         public ApiResult Get()
         {
+            var dard = User.Identity;
+            var test = User.IsInRole("Admin");
             return Ok(new [] { "It's Safe And Sound" });
         }
     }

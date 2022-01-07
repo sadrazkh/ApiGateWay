@@ -11,6 +11,17 @@
       ],
       "UpstreamPathTemplate": "/pr",
       "UpstreamHttpMethod": [ "Get" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      },
+      "RouteClaimsRequirement": {
+        "Role" :  "Admin" 
+      },
+      "AddHeadersToRequest": {
+        "claims_name": "Claims[name] > value > |",
+        "claims_role": "Claims[Role] > value > |"
+      },
       "SwaggerKey": "contacts"
     },
     {
