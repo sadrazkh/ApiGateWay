@@ -16,11 +16,33 @@
         "AllowedScopes": []
       },
       "RouteClaimsRequirement": {
-        "Role" :  "Admin" 
+        "Role": "Admin"
       },
       "AddHeadersToRequest": {
-        "claims_name": "Claims[name] > value > |",
-        "claims_role": "Claims[Role] > value > |"
+        "Role": "Claims[Role] > value? ",
+        //"Role": "Claims[Role] > value[1] > |"
+      },
+      //"AddClaimsToRequest": {
+      //  "Role": "Claims[Role] > value[0] > |",
+      //  //"UserId": "Claims[role] > value[1] > |"
+      //},
+      "RateLimitOptions": {
+
+        //This value specifies enable endpoint rate-limiting.(true/false)
+        "EnableRateLimiting": true,
+
+        //This value specifies the maximum number of requests that a client can make in a defined period.
+        "Limit": 1,
+
+        //This value specifies that we can retry after a certain number of seconds
+        "PeriodTimespan": 1,
+
+        //This value specifies the period that the limit applies to, such as 1s, 5m, 1h,1d and so on.
+        //If you make more requests in the period than the limit allows then you need to wait for PeriodTimespan to elapse before you make another request
+        "Period": "2s",
+
+        //This an array that contains the whitelist of the client. it means that the client in array will not be affected by the rate-limiting
+        "ClientWhitelist": []
       },
       "SwaggerKey": "contacts"
     },
@@ -41,6 +63,22 @@
       "LoadBalancer": "RoundRobin",
       //"LoadBalancer": "LeastConnection",  
       "UpstreamHttpMethod": [ "Get" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/Tags/lessons",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "jsonplaceholder.typicode.com",
+          "Port": 443
+        }
+      ],
+      "UpstreamPathTemplate": "/lessons",
+      //"DangerousAcceptAnyServerCertificateValidator": true,
+      //"LoadBalancer": "RoundRobin",
+      //"LoadBalancer": "LeastConnection",
+      "UpstreamHttpMethod": [ "Get" ]
+      //"UpstreamHost": "jsonplaceholder.typicode.com"
     }
   ],
   "GlobalConfiguration": {

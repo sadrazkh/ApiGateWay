@@ -20,8 +20,10 @@ namespace ProfileService.Controllers
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<User> Get()
         {
+            var claim = Request.HttpContext.Items;
 
-            var res  = Request.Headers.ToList();
+            var res = Request.Headers.Where(c => c.Key == "Role")
+                .Select(c => c.Value).First().ToString().Split(",").ToList();
 
             return Enumerable.Range(1, 5).Select(index => new User
             {

@@ -37,10 +37,12 @@ namespace Services
             var secretKey = Encoding.UTF8.GetBytes(_siteSetting.JwtSettings.SecretKey); // longer that 16 character
             var signingCredentials = new SigningCredentials(new SymmetricSecurityKey(secretKey), SecurityAlgorithms.HmacSha256Signature);
 
-            //var encryptionKey = Encoding.UTF8.GetBytes(_siteSetting.JwtSettings.EncryptKey); //must be 16 character
-            //var encryptingCredentials = new EncryptingCredentials(new SymmetricSecurityKey(encryptionKey), SecurityAlgorithms.Aes128KW, SecurityAlgorithms.Aes128CbcHmacSha256);
+            var encryptionKey = Encoding.UTF8.GetBytes(_siteSetting.JwtSettings.EncryptKey); //must be 16 character
+            var encryptingCredentials = new EncryptingCredentials(new SymmetricSecurityKey(encryptionKey), SecurityAlgorithms.Aes128KW, SecurityAlgorithms.Aes128CbcHmacSha256);
 
             var claims = await _getClaimsAsync(user);
+
+
 
             var kooft = new[]
             {
@@ -56,9 +58,9 @@ namespace Services
                 NotBefore = DateTime.Now.AddMinutes(_siteSetting.JwtSettings.NotBeforeMinutes),
                 Expires = DateTime.Now.AddMinutes(_siteSetting.JwtSettings.ExpirationMinutes),
                 SigningCredentials = signingCredentials,
-                //EncryptingCredentials = encryptingCredentials,
+                EncryptingCredentials = encryptingCredentials,
                 Subject = new ClaimsIdentity(claims),
-                //Claims = kooft,
+                //Claims = claims,
             };
 
             //JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
@@ -87,6 +89,8 @@ namespace Services
             var list = new List<Claim>(result.Claims);
             //list.Add(new Claim(ClaimTypes.MobilePhone, user.PhoneNumber));
             var securityStampClaimType = new ClaimsIdentityOptions().SecurityStampClaimType;
+            list.Add(new Claim("Role", "Admin"));
+            list.Add(new Claim("Role", "Admin2"));
             list.Add(new Claim(securityStampClaimType, user.SecurityStamp.ToString()));
             list.Add(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
 
