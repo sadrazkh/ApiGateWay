@@ -96,6 +96,6 @@ app.UseEndpoints(config =>
     //config.MapDefaultControllerRoute(); // Map default route {controller=Home}/{action=Index}/{id?}
 });
 
-app.UseOcelot().Wait();
-app.Run();
+await app.UseOcelot();
+await app.RunAsync();
 

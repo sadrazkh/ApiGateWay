@@ -179,8 +179,8 @@ namespace Services.WebFramework.Configuration
                     },
                     OnTokenValidated = async context =>
                     {
-                        var signInManager = context.HttpContext.RequestServices.GetRequiredService<SignInManager<User>>();
-                        var userRepository = context.HttpContext.RequestServices.GetRequiredService<IUserRepository>();
+                        //var signInManager = context.HttpContext.RequestServices.GetRequiredService<SignInManager<User>>();
+                        //var userRepository = context.HttpContext.RequestServices.GetRequiredService<IUserRepository>();
 
                         var claimsIdentity = context.Principal.Identity as ClaimsIdentity;
                         if (claimsIdentity.Claims?.Any() != true)
@@ -192,19 +192,21 @@ namespace Services.WebFramework.Configuration
 
                         //Find user and token from database and perform your custom validation
                         var userId = claimsIdentity.GetUserId<int>();
-                        var user = await userRepository.GetByIdAsync(context.HttpContext.RequestAborted, userId);
+                        //var user = await userRepository.GetByIdAsync(context.HttpContext.RequestAborted, userId);
+                        //var user = new User() { Id = 1 };
 
                         //if (user.SecurityStamp != Guid.Parse(securityStamp))
                         //    context.Fail("Token security stamp is not valid.");
 
-                        var validatedUser = await signInManager.ValidateSecurityStampAsync(context.Principal);
-                        if (validatedUser == null)
-                            context.Fail("Token security stamp is not valid.");
+                        //var validatedUser = await signInManager.ValidateSecurityStampAsync(context.Principal);
+                        //var validatedUser = new User() { Id = 1 };
+                        //if (validatedUser == null)
+                        //    context.Fail("Token security stamp is not valid.");
 
                         //if (!user.IsActive)
                         //    context.Fail("User is not active.");
 
-                        await userRepository.UpdateLastLoginDateAsync(user, context.HttpContext.RequestAborted);
+                        //await userRepository.UpdateLastLoginDateAsync(user, context.HttpContext.RequestAborted);
                     },
                     OnChallenge = context =>
                     {
